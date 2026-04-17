@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Profesional</title>
+    <style>
+        /* =========================================
+           CSS VARIABLES & RESET (Seperti yang diminta)
+           ========================================= */
+        :root {
+            --primary-color: #1E3A8A; /* Biru Profesional */
+            --primary-dark: #152C69;
+            --accent-color: #FBBF24; /* Kuning Lembut */
+            --accent-hover: #F59E0B;
+            --text-main: #334155;
+            --text-light: #64748B;
+            --bg-light: #F8FAFC;
+            --white: #FFFFFF;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+            --border-radius: 12px;
+        }
+
+        /* Base Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* =========================================
+           HEADER & NAVIGATION
+           ========================================= */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 4px solid var(--primary-color);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .logo-img {
+            height: 45px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            font-size: 1.05rem;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-color);
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: var(--primary-dark);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px; /* Slightly less than global to look sharp */
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+            color: var(--white);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* =========================================
+           HERO SECTION
+           ========================================= */
+        .hero {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 4rem 0;
+            margin-bottom: 3rem;
+            border-radius: 0 0 2rem 2rem;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-image {
+            flex: 1;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero-tag {
+            background-color: var(--accent-color);
+            color: var(--primary-dark);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        /* =========================================
+           MAIN LAYOUT (BLOG GRID + SIDEBAR)
+           ========================================= */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 10px;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Blog Card */
+        .blog-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-meta {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .card-title a {
+            color: inherit;
+        }
+
+        .card-excerpt {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .read-more {
+            font-weight: 600;
+            color: var(--primary-color);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .read-more:hover {
+            color: var(--accent-hover);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .widget {
+            background-color: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .widget-title {
+            font-size: 1.2rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--bg-light);
+        }
+
+        .category-list li {
+            margin-bottom: 0.8rem;
+        }
+
+        .category-list a {
+            color: var(--text-main);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .category-list a:hover {
+            color: var(--primary-color);
+            padding-left: 5px;
+        }
+
+        .category-count {
+            background-color: var(--bg-light);
+            color: var(--text-light);
+            padding: 0.1rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .newsletter-form input {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .newsletter-form button {
+            width: 100%;
+        }
+
+        /* =========================================
+           FOOTER
+           ========================================= */
+        footer {
+            background-color: var(--primary-dark);
+            color: var(--white);
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-col h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .footer-col p, .footer-col ul {
+            color: #CBD5E1;
+            font-size: 0.95rem;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-col a {
+            color: #CBD5E1;
+        }
+
+        .footer-col a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #94A3B8;
+            font-size: 0.9rem;
+        }
+
+        /* =========================================
+           RESPONSIVE DESIGN
+           ========================================= */
+        @media (max-width: 900px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            .hero-content {
+                flex-direction: column-reverse;
+            }
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .nav-links {
+                display: none; /* Menyembunyikan menu pada skrin kecil */
+            }
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero {
+                padding: 2rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container navbar">
+            <a href="#" class="logo">
+                <!-- Ikon Lencana Sekolah (SVG Sementara) -->
+                <svg class="logo-img" width="50" height="60" viewBox="0 0 50 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M25 0L0 10V30C0 45 25 60 25 60C25 60 50 45 50 30V10L25 0Z" fill="#FFFFFF" stroke="#1E3A8A" stroke-width="3"/>
+                    <path d="M25 3L3 12V30C3 43 25 56 25 56V3Z" fill="#EF4444"/>
+                    <path d="M25 3V56C25 56 47 43 47 30V12L25 3Z" fill="#FBBF24"/>
+                    <circle cx="25" cy="25" r="8" fill="#FFFFFF"/>
+                    <circle cx="25" cy="25" r="4" fill="#1E3A8A"/>
+                </svg>
+                SMK Seri Wakanda
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Mengenai Kami</a></li>
+                    <li>
+                        <a href="#">Pentadbiran 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 4px; margin-top: 2px;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </a>
+                    </li>
+                    <li><a href="#" class="active">Berita</a></li>
+                    <li><a href="#">Galeri</a></li>
+                    <li><a href="#">Hubungi Kami</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION (Featured Article) -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <span class="hero-tag">Berita Utama</span>
+                <h1>Kejohanan Olahraga Tahunan Ke-25 Berlangsung Meriah</h1>
+                <p>Tahniah kepada Rumah Merah (Mars) kerana berjaya merangkul gelaran Juara Keseluruhan pada tahun ini dengan pungutan pingat yang memberangsangkan. Syabas diucapkan kepada semua atlet sekolah!</p>
+                <a href="#" class="btn btn-primary">Baca Berita Penuh &rarr;</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sukan Tahunan">
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main class="container main-layout">
+        
+        <!-- Blog Posts Grid -->
+        <div class="main-content">
+            <h2 class="section-title">Berita Terkini Sekolah</h2>
+            
+            <div class="blog-grid">
+                <!-- Card 1 -->
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Kecemerlangan Akademik" class="card-img">
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span>Unit Kurikulum</span>
+                            <span>15 April 2026</span>
+                        </div>
+                        <h3 class="card-title"><a href="#">Keputusan Percubaan SPM: Peningkatan Gred Purata Sekolah</a></h3>
+                        <p class="card-excerpt">Tahniah kepada semua calon SPM atas peningkatan prestasi yang membanggakan dalam peperiksaan percubaan baru-baru ini.</p>
+                        <a href="#" class="read-more">Baca Lanjut &raquo;</a>
+                    </div>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gotong Royong" class="card-img">
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span>Biro PIBG</span>
+                            <span>12 April 2026</span>
+                        </div>
+                        <h3 class="card-title"><a href="#">Program Gotong-Royong Perdana Bersama Komuniti Wakanda</a></h3>
+                        <p class="card-excerpt">Kerjasama erat antara ibu bapa, guru dan pelajar dalam menceriakan kawasan persekitaran sekolah menjelang bulan kemerdekaan.</p>
+                        <a href="#" class="read-more">Baca Lanjut &raquo;</a>
+                    </div>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Kem Kepimpinan" class="card-img">
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span>Unit HEM</span>
+                            <span>10 April 2026</span>
+                        </div>
+                        <h3 class="card-title"><a href="#">Kem Kepimpinan Pengawas & Pembimbing Rakan Sebaya 2026</a></h3>
+                        <p class="card-excerpt">Seramai 120 orang pemimpin pelajar telah menyertai kem jati diri bertujuan membentuk karisma kepimpinan yang unggul.</p>
+                        <a href="#" class="read-more">Baca Lanjut &raquo;</a>
+                    </div>
+                </article>
+                
+                <!-- Card 4 -->
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1523580494112-071d45740443?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Lawatan Universiti" class="card-img">
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span>Unit Kaunseling</span>
+                            <span>8 April 2026</span>
+                        </div>
+                        <h3 class="card-title"><a href="#">Lawatan Penanda Aras Tingkatan 5 ke Universiti Malaya</a></h3>
+                        <p class="card-excerpt">Pendedahan awal kepada kehidupan kampus serta taklimat hala tuju kerjaya bagi menyuntik semangat pelajar menjelang peperiksaan.</p>
+                        <a href="#" class="read-more">Baca Lanjut &raquo;</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Widget: Categories -->
+            <div class="widget">
+                <h3 class="widget-title">Kategori Berita</h3>
+                <ul class="category-list">
+                    <li><a href="#">Pengumuman Rasmi <span class="category-count">12</span></a></li>
+                    <li><a href="#">Kurikulum & Akademik <span class="category-count">24</span></a></li>
+                    <li><a href="#">Hal Ehwal Murid (HEM) <span class="category-count">8</span></a></li>
+                    <li><a href="#">Kokurikulum & Sukan <span class="category-count">15</span></a></li>
+                    <li><a href="#">Aktiviti PIBG <span class="category-count">10</span></a></li>
+                </ul>
+            </div>
+
+            <!-- Widget: Newsletter -->
+            <div class="widget">
+                <h3 class="widget-title">Langgan Makluman</h3>
+                <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 1rem;">Dapatkan kemas kini aktiviti dan makluman penting terus ke e-mel anda.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Alamat E-mel anda" required>
+                    <button type="submit" class="btn">Langgan Sekarang</button>
+                </form>
+            </div>
+        </aside>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-col">
+                <div class="logo" style="color: white; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px;">
+                    <svg width="30" height="36" viewBox="0 0 50 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M25 0L0 10V30C0 45 25 60 25 60C25 60 50 45 50 30V10L25 0Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="3"/>
+                        <path d="M25 3L3 12V30C3 43 25 56 25 56V3Z" fill="#EF4444"/>
+                        <path d="M25 3V56C25 56 47 43 47 30V12L25 3Z" fill="#FBBF24"/>
+                        <circle cx="25" cy="25" r="8" fill="#FFFFFF"/>
+                        <circle cx="25" cy="25" r="4" fill="#1E3A8A"/>
+                    </svg>
+                    SMK Seri Wakanda
+                </div>
+                <p>Wadah informasi rasmi dan pusat hebahan berita terkini mengenai pencapaian dan aktiviti warga pendidik serta pelajar.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Pautan Pantas</h3>
+                <ul>
+                    <li><a href="#">Portal KPM</a></li>
+                    <li><a href="#">Sistem SAPS Ibu Bapa</a></li>
+                    <li><a href="#">Takwim Sekolah 2026</a></li>
+                    <li><a href="#">Hubungi Pentadbiran</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Ikuti Kami</h3>
+                <ul>
+                    <li><a href="#">Facebook Rasmi</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Saluran YouTube</a></li>
+                    <li><a href="#">TikTok Sekolah</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SMK Seri Wakanda. Semua Hak Cipta Terpelihara.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
